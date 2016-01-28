@@ -6,8 +6,9 @@ import hmac
 import os
 import posixpath
 import hashlib
-import six
-from six.moves import urllib
+from urllib import urlencode, quote_plus
+#import six
+#from six.moves import urllib
 
 class HTTPRequest(object):
 
@@ -80,11 +81,54 @@ class V2Handler(object):
         ss += qs
         return ss
 
+    def generate_signature(self, req):
+     
+        self.add_params(req)
+ 
+        url_params = dict(AWSAccessKeyId=self.access_key,
+                          SignatureVersion='2',
+                          SignatureMethod='HmacSHA256') 
+
+        url_params['Timestamp'] = req.params['Timestamp']
+
+        url_params.update(req.params) 
+
+        keys = url_params.keys()
+
+        keys.sort()
+
+        values = map(url_params.get, keys)
+
+        url_string = urlencode(zip(keys,values))
+
+        string_to_sign = "GET\n%s\n%s\n%s" % (req.host,'/',url_string)
+        #string_to_sign = "GET\n%s\n%s\n%s" % ('10.140.215.25','/',url_string)
+
+        signature = hmac.new(key=self.secret_key,
+                             msg=string_to_sign,
+                             digestmod=hashlib.sha256).digest()
+
+        signature = base64.encodestring(signature).strip()
+
+        urlencoded_signature = quote_plus(signature)
+
+        return urlencoded_signature
+
     def add_auth(self, req):
-        hmac_256 = hmac.new(self.secret_key, digestmod=hashlib.sha256)
-        canonical_string = self.string_to_sign(req)
-        hmac_256.update(canonical_string.encode('utf-8'))
-        b64 = base64.b64encode(hmac_256.digest()).decode('utf-8')
-        req.params['Signature'] = b64
+       
+        signature = self.generate_signature(req)
+ 
+        req.params['Signature'] = signature
+
         return req
+        
+    #def add_auth(self, req):
+    #    hmac_256 = hmac.new(self.secret_key, digestmod=hashlib.sha256)
+    #    canonical_string = self.string_to_sign(req)
+    #    print "req : " + req
+    #    print "canonical_string : " + canonical_string
+    #    hmac_256.update(canonical_string.encode('utf-8'))
+    #    b64 = base64.b64encode(hmac_256.digest()).decode('utf-8')
+    #    req.params['Signature'] = b64
+    #    return req
 
