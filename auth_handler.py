@@ -47,7 +47,7 @@ class V2Handler(object):
         self.secret_key = os.environ.get('JCS_SECRET_KEY')
 
     def add_params(self, req):
-        req.params['AWSAccessKeyId'] = self.access_key
+        req.params['JCSAccessKeyId'] = self.access_key
         req.params['SignatureVersion'] = '2'
         req.params['SignatureMethod'] = 'HmacSHA256'
         req.params['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -85,7 +85,7 @@ class V2Handler(object):
      
         self.add_params(req)
  
-        url_params = dict(AWSAccessKeyId=self.access_key,
+        url_params = dict(JCSAccessKeyId=self.access_key,
                           SignatureVersion='2',
                           SignatureMethod='HmacSHA256') 
 
@@ -102,7 +102,6 @@ class V2Handler(object):
         url_string = urlencode(zip(keys,values))
 
         string_to_sign = "GET\n%s\n%s\n%s" % (req.host,'/',url_string)
-        #string_to_sign = "GET\n%s\n%s\n%s" % ('10.140.215.25','/',url_string)
 
         signature = hmac.new(key=self.secret_key,
                              msg=string_to_sign,
