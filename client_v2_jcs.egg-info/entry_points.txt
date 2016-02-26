@@ -1,3 +1,0 @@
-[console_scripts]
-client_v2_jcs = client_v2_jcs.client_v2_jcs:main
-
