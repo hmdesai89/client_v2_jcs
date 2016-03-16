@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+
+# Copyright 2016, Reliance Industries Ltd, all rights reserved.
+# Author: Deepak Agrawal
+
 import os
 import sys
 import datetime
@@ -42,9 +46,10 @@ def requestify(request):
     return request_string
 
 def main():
-    req = sys.argv[1]
+    #req = sys.argv[1]
     iam_token_response = generate_iam_token_from_key()
     print iam_token_response
+    print iam_token_response['token_id']
     #os.system(chngd_req)
 
 main()

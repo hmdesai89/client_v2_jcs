@@ -1,3 +1,6 @@
+# Copyright 2016, Reliance Industries Ltd, all rights reserved.
+# Author: Deepak Agrawal
+
 import os
 import requests
 import json
