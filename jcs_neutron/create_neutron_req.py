@@ -27,7 +27,8 @@ def add_params(string):
 def create_neutron_curl_req(token):
     net_url = 'https://vpc.ind-west-1.staging.jiocloudservices.com:9696/'
     headers = {'X-Auth-Token': token, 'User-Agent': 'curl/7.35.0'}
-    
+
+    # neutron net-list
     url_path_net_list = 'v2.0/networks'
     json_data = {}
     verify=False
