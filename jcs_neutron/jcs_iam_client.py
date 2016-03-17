@@ -74,9 +74,10 @@ def generateEc2Request(access_key, secret_key, host, port, path, params, signatu
     verify = False
     response = requests.request('POST', token_url, verify=verify,
                              data=creds_json, headers=headers)
-    print response.text
-    print response
-    return response
+    json_data = json.loads(response.text)
+    token = json_data['token_id']
+    print response, response.text
+    return token
 
 
 
