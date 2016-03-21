@@ -20,7 +20,15 @@ def requestify(request):
     [initial, rest] = request.split('?')
     parts = initial.split('/')
     protocol, host_port = parts[0][ : -1], parts[2]
+<<<<<<< HEAD:vpcclient/vpcclient.py
     #path = '/' + parts[3] + '/' + parts[4] + '/'
+=======
+#    print "Host Port is"
+#    print host_port
+    #path = '/' + parts[3] + '/' + parts[4] + '/'
+    #print "Path is"
+    #print path
+>>>>>>> ee5141a8e2a2bc9443dc925ce874bf01499cc725:create_request.py
     #auth_path = path
     host = host_port
     add_params(rest)
