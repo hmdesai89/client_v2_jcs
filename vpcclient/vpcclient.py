@@ -47,4 +47,7 @@ def main():
     print chngd_req
     #os.system(chngd_req)
 
-main()
+
+if __name__ == '__main__':
+  main()
+
