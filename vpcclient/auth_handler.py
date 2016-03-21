@@ -12,25 +12,25 @@ from urllib import urlencode, quote_plus
 
 class HTTPRequest(object):
 
-    def __init__(self, method, protocol, host, path, auth_path,
+    def __init__(self, method, protocol, host, #path, auth_path,
                  params, headers, body):
         self.method = method
         self.protocol = protocol
         self.host = host
         #self.port = port
-        self.path = path
-        if auth_path is None:
-            auth_path = path
-        self.auth_path = auth_path
+        #self.path = path
+        #if auth_path is None:
+        #    auth_path = path
+        #self.auth_path = auth_path
         self.params = params
         # chunked Transfer-Encoding should act only on PUT request.
         self.headers = headers
         self.body = body
 
     def __str__(self):
-        return (('method:(%s) protocol:(%s) host(%s) port(%s) path(%s) auth_path(%s)'
+        return (('method:(%s) protocol:(%s) host(%s) port(%s)'
                  ' params(%s) headers(%s) body(%s)') % (self.method,
-                 self.protocol, self.host, self.path, self.auth_path, self.params,
+                 self.protocol, self.host, self.params,
                  self.headers, self.body))
 
 
