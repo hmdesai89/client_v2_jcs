@@ -9,7 +9,7 @@ def generate_url(access_key, secret_key, host, port, path, params):
     import base64, hashlib, hmac, time
     from urllib import urlencode, quote_plus
 
-    base_url = "https://%s:%s%s"%(host,port, path)
+    base_url = "https://%s%s"%(host, path)
     url_params = dict(
         JCSAccessKeyId=access_key,
         SignatureVersion='2',
@@ -58,14 +58,14 @@ def generateEc2Request(access_key, secret_key, host, port, path, params, signatu
             'headers': {},
             'body_hash': ''
      }
-    token_url = 'https://10.140.215.24:5000/v2.0/ec2-auth?action=jrn:jcs:iam:ListUsers&resource=jrn:jcs:identity:a5:a2:hhhh&implicit_allow=false'
+    token_url = 'https://10.140.209.29:5000/v2.0/ec2-auth?action=jrn:jcs:iam:ListUsers&resource=jrn:jcs:identity:a5:a2:hhhh&implicit_allow=false'
     creds = {'ec2Credentials': cred_dict}
     creds_json = jsonutils.dumps(creds)
     #print creds_json
     headers = {'Content-Type': 'application/json'}
     verify = False
     #print json.dumps(response.json(),indent=4,sort_keys=False)
-    token_url = 'https://10.140.215.24:5000/v2.0/ec2-auth'
+    token_url = 'https://10.140.209.29/ec2-auth'
     cred_dict["action_resource_list"]= json.loads('[]')
     creds = {'ec2Credentials': cred_dict}
     creds_json = jsonutils.dumps(creds)
@@ -91,7 +91,7 @@ def generate_iam_token_from_key():
        return 0
     params = {'Action':'ListUsers'}
     response =  generate_url(AWS_ACCESS_KEY_ID,
-            AWS_SECRET_ACCESS_KEY,'10.140.215.24','5000','/v2.0/ec2-auth',params)
+            AWS_SECRET_ACCESS_KEY,'10.140.209.29','','/ec2-auth',params)
     return response
 
 

@@ -55,12 +55,28 @@ def create_neutron_curl_req(token):
     print response
     print json_response
 
+def verify_token_auth(token):
+    net_url = 'https://iam.ind-west-1.internal.jiocloudservices.com/token-auth'
+    headers = {'X-Auth-Token': token, 'User-Agent': 'curl/7.35.0'}
+    
+    creds_dict = {}
+    creds_dict['action_resource_list']= []
+    verify=False
+    response = requests.request('POST', net_url,
+                                verify=verify,
+                                data=creds_dict,
+                                headers=headers)
+    json_response = json.loads(response.text)
+    print response
+    print json_response
+
 
 def main():
     #req = sys.argv[1]
     iam_token_response = generate_iam_token_from_key()
     print iam_token_response
     #create_neutron_curl_req(iam_token_response)
-    neutron_quota_service(iam_token_response, '00000000000000000000961655772674')
+    #neutron_quota_service(iam_token_response, '00000000000000000000961655772674')
+    verify_token_auth(iam_token_response)
 
 main()
