@@ -41,7 +41,7 @@ def neutron_quota_service(token, tenant_id=None):
     print json_response
 
 def create_neutron_curl_req(token):
-    net_url = 'https://vpc.ind-west-1.staging.jiocloudservices.com:9696/'
+    net_url = 'https://network.jiocloud.com:9696/'
     headers = {'X-Auth-Token': token, 'User-Agent': 'curl/7.35.0'}
 
     # neutron net-list
@@ -75,8 +75,8 @@ def main():
     #req = sys.argv[1]
     iam_token_response = generate_iam_token_from_key()
     print iam_token_response
-    #create_neutron_curl_req(iam_token_response)
+    create_neutron_curl_req(iam_token_response)
     #neutron_quota_service(iam_token_response, '00000000000000000000961655772674')
-    verify_token_auth(iam_token_response)
+    #verify_token_auth(iam_token_response)
 
 main()
