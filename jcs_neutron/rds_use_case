@@ -1,0 +1,21 @@
+DT setup variables
+http_proxy=http://10.140.192.134:10000/
+https_proxy=http://10.140.192.134:10000/
+
+vpc_user_0036: customer ID
+--------------
+
+OSID:
+network: 88a7e079-96aa-4ae4-ad8c-3a518a6cd1c5
+subnet: 5a44dcdc-9080-4985-8253-30f1ae8653e7
+
+2016-05-17 11:51:55.549 18402 DEBUG neutron_plugin_contrail.plugins.opencontrail.contrail_plugin [req-23234106-0212-458b-8d5f-7c16bb258373 ] get_network(): {u'status': u'ACTIVE', u'router:external': False, u'subnets': [u'5a44dcdc-9080-4985-8253-30f1ae8653e7'], u'name': u'subnet-e4dbeb3e', u'admin_state_up': True, u'tenant_id': u'00000000000000000000860112177782', u'shared': False, u'contrail:subnet_ipam': [{u'subnet_cidr': u'1.1.1.128/25', u'ipam_fq_name': [u'default-domain', u'default-project', u'default-network-ipam']}], u'contrail:instance_count': 0, u'id': u'88a7e079-96aa-4ae4-ad8c-3a518a6cd1c5', u'contrail:fq_name': [u'default-domain', u'Customer-00000000000000000000860112177782', u'default-virtual-network']} _get_resource /usr/lib/python2.7/dist-packages/neutron_plugin_contrail/plugins/opencontrail/contrail_plugin.py:281
+2016-05-17 11:51:55.552 18402 INFO neutron.api.v2.resource [req-23234106-0212-458b-8d5f-7c16bb258373 ] create failed (client error): Tenant 00000000000000000000961655772674 not allowed to create port on this network
+
+
+RDS admin account: vpc_user_0034
+
+port created by RDS admin guy from network belonging to customer's VPC:
+
+{u'status': u'ACTIVE', u'name': u'ed4d4d29-7d9e-4693-b477-49d3b33befbb', u'admin_state_up': True, u'network_id': u'88a7e079-96aa-4ae4-ad8c-3a518a6cd1c5', u'tenant_id': u'00000000000000000000860112177782', u'device_owner': u'network:router_interface', u'mac_address': u'02:ed:4d:4d:29:7d', u'fixed_ips': [{u'subnet_id': u'5a44dcdc-9080-4985-8253-30f1ae8653e7', u'ip_address': u'1.1.1.129'}], u'id': u'ed4d4d29-7d9e-4693-b477-49d3b33befbb', u'security_groups': [u'3f6c352a-fa86-40e7-a4e8-8c4cdd332020'], u'device_id': u'6dfd8b2c-a585-4618-8289-7dcc114edef6'}]}
+

@@ -6,6 +6,8 @@
 import os
 import requests
 import json
+import sys
+
 from oslo_serialization import jsonutils
 def generate_url(access_key, secret_key, host, port, path, params):
     import base64, hashlib, hmac, time
@@ -60,14 +62,14 @@ def generateEc2Request(access_key, secret_key, host, port, path, params, signatu
             'headers': {},
             'body_hash': ''
      }
-    token_url = 'https://iam.ind-west-1.staging.jiocloudservices.com/ec2-auth?action=jrn:jcs:iam:ListUsers&resource=jrn:jcs:identity:a5:a2:hhhh&implicit_allow=false'
+    token_url = 'https://10.140.209.29:5000/v2.0/ec2-auth?action=jrn:jcs:iam:ListUsers&resource=jrn:jcs:identity:a5:a2:hhhh&implicit_allow=false'
     creds = {'ec2Credentials': cred_dict}
     creds_json = jsonutils.dumps(creds)
     #print creds_json
     headers = {'Content-Type': 'application/json'}
     verify = False
     #print json.dumps(response.json(),indent=4,sort_keys=False)
-    token_url = 'https://iam.ind-west-1.staging.jiocloudservices.com/ec2-auth'
+    token_url = 'https://10.140.209.29/ec2-auth'
     cred_dict["action_resource_list"]= json.loads('[]')
     creds = {'ec2Credentials': cred_dict}
     creds_json = jsonutils.dumps(creds)
@@ -84,7 +86,22 @@ def generateEc2Request(access_key, secret_key, host, port, path, params, signatu
 
 
 
-def generate_iam_token_from_key():
+def generate_iam_user(name, password, email):
+    AWS_ACCESS_KEY_ID = os.environ.get('JCS_ACCESS_KEY')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('JCS_SECRET_KEY')
+
+    if (not  AWS_ACCESS_KEY_ID) or (not AWS_SECRET_ACCESS_KEY) :
+       print "Please set env variable JCS_ACCESS_KEY and JCS_SECRET_KEY"
+       return 0
+    params = {'Action':'CreareUser',
+              'Name'  : name,
+              'Password': password,
+              'Email': email }
+    response =  generate_url(AWS_ACCESS_KEY_ID,
+            AWS_SECRET_ACCESS_KEY,'10.140.209.29','','/ec2-auth',params)
+    return response
+
+def list_iam_user():
     AWS_ACCESS_KEY_ID = os.environ.get('JCS_ACCESS_KEY')
     AWS_SECRET_ACCESS_KEY = os.environ.get('JCS_SECRET_KEY')
 
@@ -93,8 +110,14 @@ def generate_iam_token_from_key():
        return 0
     params = {'Action':'ListUsers'}
     response =  generate_url(AWS_ACCESS_KEY_ID,
-            AWS_SECRET_ACCESS_KEY,'iam.ind-west-1.staging.jiocloudservices.com','443','/ec2-auth',params)
-    return response
+            AWS_SECRET_ACCESS_KEY,'10.140.209.29','','/ec2-auth',params)
 
 
-if __name__ == "__main__": generate_iam_token_from_key()
+def main():
+    name = sys.argv[1]
+    password = sys.argv[2]
+    Email = sys.argv[3]
+
+    #generate_iam_user(name, password, Email)
+    list_iam_user()
+main()

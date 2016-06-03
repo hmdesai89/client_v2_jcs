@@ -20,8 +20,8 @@ def requestify(request):
     [initial, rest] = request.split('?')
     parts = initial.split('/')
     protocol, host_port = parts[0][ : -1], parts[2]
-    path = '/' + parts[3] + '/' + parts[4] + '/'
-    auth_path = path
+    #path = '/' + parts[3] + '/' + parts[4] + '/'
+    auth_path = []
     host = host_port
     add_params(rest)
     headers['User-Agent'] = 'curl/7.35.0'
