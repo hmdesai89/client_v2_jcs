@@ -60,21 +60,11 @@ def generateEc2Request(access_key, secret_key, host, port, path, params, signatu
             'headers': {},
             'body_hash': ''
      }
-<<<<<<< HEAD
-    token_url = 'https://iam.ind-west-1.staging.jiocloudservices.com/ec2-auth?action=jrn:jcs:iam:ListUsers&resource=jrn:jcs:identity:a5:a2:hhhh&implicit_allow=false'
-    creds = {'ec2Credentials': cred_dict}
-    creds_json = jsonutils.dumps(creds)
-=======
->>>>>>> 744bf38a09c50afece344b8f7d25bbc55298fd30
     #print creds_json
     headers = {'Content-Type': 'application/json'}
     verify = False
     #print json.dumps(response.json(),indent=4,sort_keys=False)
-<<<<<<< HEAD
-    token_url = 'https://iam.ind-west-1.staging.jiocloudservices.com/ec2-auth'
-=======
     token_url = JCS_IAM_URL+'/ec2-auth'
->>>>>>> 744bf38a09c50afece344b8f7d25bbc55298fd30
     cred_dict["action_resource_list"]= json.loads('[]')
     creds = {'ec2Credentials': cred_dict}
     creds_json = jsonutils.dumps(creds)
@@ -89,9 +79,6 @@ def generateEc2Request(access_key, secret_key, host, port, path, params, signatu
     print response, response.text
     return token
 
-
-
-
 def generate_iam_token_from_key():
     AWS_ACCESS_KEY_ID = os.environ.get('ACCESS_KEY')
     AWS_SECRET_ACCESS_KEY = os.environ.get('SECRET_KEY')
@@ -101,11 +88,7 @@ def generate_iam_token_from_key():
        return 0
     params = {'Action':'ListUsers'}
     response =  generate_url(AWS_ACCESS_KEY_ID,
-<<<<<<< HEAD
-            AWS_SECRET_ACCESS_KEY,'iam.ind-west-1.staging.jiocloudservices.com','443','/ec2-auth',params)
-=======
             AWS_SECRET_ACCESS_KEY, JCS_IAM_URL ,'','/ec2-auth',params)
->>>>>>> 744bf38a09c50afece344b8f7d25bbc55298fd30
     return response
 
 
