@@ -41,15 +41,15 @@ def neutron_quota_service(token, tenant_id=None):
     print json_response
 
 def create_neutron_curl_req(token):
-    net_url = 'https://network.jiocloud.com:9696/'
+    net_url = JCS_VPC_URL+':9696/'
     headers = {'X-Auth-Token': token, 'User-Agent': 'curl/7.35.0'}
 
     # neutron net-list
-    #url_path_net_list = 'v2.0/networks'
-    url_path_net_list = 'v2.0/security-group-rules/9b418b1c-e7ef-425a-a2f7-963527e02adb'
+    url_path_net_list = 'v2.0/networks'
+    #url_path_net_list = 'v2.0/security-group-rules/9b418b1c-e7ef-425a-a2f7-963527e02adb'
     json_data = {}
     verify=False
-    response = requests.request('DELETE', net_url+url_path_net_list,
+    response = requests.request('GET', net_url+url_path_net_list,
                                 verify=verify,
                                 headers=headers)
     json_response = json.loads(response.text)
@@ -98,13 +98,11 @@ def main():
     #req = sys.argv[1]
     iam_token_response = generate_iam_token_from_key()
     print iam_token_response
-<<<<<<< HEAD
     create_neutron_curl_req(iam_token_response)
-=======
-    #create_neutron_curl_req(iam_token_response)
-    create_neutron_port_create_req(iam_token_response, '88a7e079-96aa-4ae4-ad8c-3a518a6cd1c5', 'vpc_user_0036_p1')
->>>>>>> 744bf38a09c50afece344b8f7d25bbc55298fd30
+    #create_neutron_port_create_req(iam_token_response, '88a7e079-96aa-4ae4-ad8c-3a518a6cd1c5', 'vpc_user_0036_p1')
     #neutron_quota_service(iam_token_response, '00000000000000000000961655772674')
     #verify_token_auth(iam_token_response)
+
+JCS_VPC_URL =           os.environ.get('VPC_URL')
 
 main()
